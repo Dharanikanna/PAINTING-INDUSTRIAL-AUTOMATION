@@ -1,0 +1,149 @@
+###################################################################################################################
+                                         DEVELOPED BY DHARANI KANNA K V
+###################################################################################################################
+
+#include <LiquidCrystal.h>
+
+int MAGNET = 8;
+int MOTOR11 = 2;
+int MOTOR12 = 3;
+int MOTOR21 = 4;
+int MOTOR22 = 5;
+int POWER_SWITCH = 9;
+int  POWER = 0;
+const int rs = 5, en = 6, d4 = 7, d5 = 8, d6 = 9, d7 = 10;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+void MOTORS_STOP() {
+  digitalWrite(MOTOR11, LOW);
+  digitalWrite(MOTOR12, LOW);
+  digitalWrite(MOTOR21, LOW);
+  digitalWrite(MOTOR22, LOW);
+}
+void MOTOR1_UP() {
+  digitalWrite(MOTOR11, LOW);
+  digitalWrite(MOTOR12, HIGH);
+  digitalWrite(MOTOR21, LOW);
+  digitalWrite(MOTOR22, LOW);
+}
+void MOTOR1_DOWN() {
+  digitalWrite(MOTOR11, HIGH);
+  digitalWrite(MOTOR12, LOW);
+  digitalWrite(MOTOR21, LOW);
+  digitalWrite(MOTOR22, LOW);
+}
+void MOTOR2_FORWARD() {
+  digitalWrite(MOTOR11, LOW);
+  digitalWrite(MOTOR12, LOW);
+  digitalWrite(MOTOR21, HIGH);
+  digitalWrite(MOTOR22, LOW);
+}
+void MOTOR2_BACKWARD() {
+  digitalWrite(MOTOR11, LOW);
+  digitalWrite(MOTOR12, LOW);
+  digitalWrite(MOTOR21, LOW);
+  digitalWrite(MOTOR22, HIGH);
+}
+void setup() {
+  lcd.begin(16, 2);
+  pinMode(MAGNET, OUTPUT);
+  pinMode(MOTOR11, OUTPUT);
+  pinMode(MOTOR12, OUTPUT);
+  pinMode(MOTOR21, OUTPUT);
+  pinMode(MOTOR22, OUTPUT);
+  pinMode(POWER_SWITCH, INPUT);
+}
+
+void loop() {
+
+  POWER = digitalRead(POWER_SWITCH);
+  //lcd.print("POWER ON");
+  // delay(5000);
+  //lcd.clear();
+  if (POWER == 1) {
+    lcd.print("STARTING...");
+    delay(150);
+    lcd.clear();
+    digitalWrite(MAGNET, HIGH);
+
+    MOTOR1_UP();
+    //delay(2000);
+    lcd.setCursor(0, 1);
+    lcd.print("MAGNET UP");
+    delay(2000);
+    lcd.clear();
+
+    MOTOR2_FORWARD();
+    //delay(5000);
+    lcd.setCursor(0, 1);
+    lcd.print("MOVE FORWARD");
+    delay(5000);
+    lcd.clear();
+
+    MOTOR1_DOWN();
+    //delay(4000);
+    lcd.setCursor(0, 1);
+    lcd.print("DOWN PICK");
+    delay(4000);
+    lcd.clear();
+
+    MOTOR1_UP();
+    //delay(4000);
+    lcd.setCursor(0, 1);
+    lcd.print("MATERIAL PICKED");
+    delay(4000);
+    lcd.clear();
+
+    MOTOR2_FORWARD();
+    //delay(5000);
+    lcd.setCursor(0, 1);
+    lcd.print("MOVING FORWARD");
+    delay(5000);
+    lcd.clear();
+
+    MOTOR1_DOWN();
+    //delay(3000);
+    lcd.setCursor(0, 1);
+    lcd.print("DOWN TO COLOUR");
+    delay(3000);
+    lcd.clear();
+
+    MOTOR1_UP();
+    //delay(3000);
+    lcd.setCursor(0, 1);
+    lcd.print("MATERIAL COLORED");
+    delay(3000);
+    lcd.clear();
+
+    MOTOR2_BACKWARD();
+    //delay(10000);
+    lcd.setCursor(0, 1);
+    lcd.print("INITIAL POINT");
+    delay(10000);
+    lcd.clear();
+
+    MOTOR1_DOWN();
+    //delay(2000);
+    lcd.setCursor(0, 1);
+    lcd.print("PLACING MATERIAL");
+    delay(2000);
+    lcd.clear();
+
+    digitalWrite(MAGNET, LOW);
+
+    MOTOR1_UP();
+    //delay(2000);
+    lcd.setCursor(0, 1);
+    lcd.print("COMPLETED");
+    delay(2000);
+    lcd.clear();
+  }
+  else; {
+
+    lcd.print("OFF STATE");
+    delay(150);
+    lcd.clear();
+    MOTORS_STOP();
+
+
+  }
+}
